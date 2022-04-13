@@ -206,3 +206,10 @@ a {
 .invalid-form-success {
     color: green;
 }
+
+@media screen and (max-width: 375px) {
+    header div {
+        display: grid;
+        grid-template-columns: auto;
+    }
+}
