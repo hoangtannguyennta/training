@@ -50,7 +50,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {   
         $messages = [
-            'name.min'=>'The name must not be greater than 255 characters.',
+            'name.min'=>'Tên không được lớn hơn 255 ký tự.',
             'password.min'=>'Vui lòng nhập mật khẩu ít hơn 8 ký tự!',
             'password.confirmed'=>'Xác nhận mật khẩu không khớp.',
             'email.unique'=>'Email đã tồn tại!',
