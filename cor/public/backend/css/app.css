@@ -207,12 +207,11 @@ a {
     color: green;
 }
 
-<<<<<<< HEAD
-=======
 @media screen and (max-width: 375px) {
     header div {
         display: grid;
         grid-template-columns: auto;
     }
 }
->>>>>>> feature/add_login
+
+
