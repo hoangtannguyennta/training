@@ -213,3 +213,20 @@ a {
         grid-template-columns: auto;
     }
 }
+
+@media screen and (max-width: 443px) {
+    .form {
+        width: 100%;
+        margin: 5% auto;
+    }
+    .modal-content {
+        overflow: auto; 
+        white-space: nowrap;
+        background-color: #fefefe;
+        margin: auto;
+        border: 1px solid #888;
+        padding: 1%;
+        width: 100%;
+        border-radius: 5px;
+    }
+}
