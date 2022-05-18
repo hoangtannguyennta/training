@@ -3,8 +3,8 @@
 
 <section class="banner banner-table">
     <div class="container">
-        <h1>{{ __($title) }}</h1>
-        <a href="{{ route('user.create') }}" class="button"><i class="fa fa-plus"></i></a>      
+        <h1>{{ __('Danh sách người dùng') }}</h1>
+        <a href="{{ route('users.create') }}" class="button"><i class="fa fa-plus"></i></a>
         <table>
             <tr>
                 <th>{{ __('#') }}</th>
@@ -28,9 +28,9 @@
                     <td>{{ $item->created_at }}</td>
                     <td>
                         <div class="action">
-                            <a class="button" href="{{ route('user.edit',$item->id) }}"><i class="fa fa-edit"></i></a>
-                            <a class="button modal-success" data-email="{{ $item->email }}" data-password="{{ $item->password }}" data-created_at="{{ $item->created_at }}" data-name="{{ $item->name }}"><i class="fa fa-eye"></i></a>
-                            <form action="{{ route('user.delete',$item->id) }}" enctype="multipart/form-data" method="POST">
+                            <a class="button" href="{{ route('users.edit',$item->id) }}"><i class="fa fa-edit"></i></a>
+                            <a class="button modal-success" data-email="{{ $item->email }}" data-created_at="{{ $item->created_at }}" data-name="{{ $item->name }}"><i class="fa fa-eye"></i></a>
+                            <form action="{{ route('users.delete',$item->id) }}" enctype="multipart/form-data" method="POST">
                                 @csrf
                                 @method('POST')
                                 <button class="button" onclick="return confirm('Xoá vĩnh viễn {{ $item->email }} ?')" type="submit"><i class="fa fa-trash-o"></i></button>
@@ -40,7 +40,7 @@
                 </tr>
             @endforeach
             @endif
-        </table>  
+        </table>
     </div>
 </section>
 
@@ -56,7 +56,7 @@
         <p class="user-password">***</p>
         <h3>{{ __('Ngày khởi tạo') }}</h3>
         <p class="user-created_at"></p>
-    </div>  
+    </div>
 </div>
-  
+
 @endsection
