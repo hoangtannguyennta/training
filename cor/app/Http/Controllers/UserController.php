@@ -5,7 +5,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -18,12 +20,12 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     public function index()
     {
-        $title = "Danh sách người dùng";
-        $users = User::all();
-        return view('user.list',compact('users','title'));
+        $user = Auth::user();
+        $users = User::whereNotIn('id', [$user->id])->get();
+        return view('user.list', compact('users'));
     }
 
     /**
@@ -33,8 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $title = "Thêm người dùng";
-        return view('user.create',compact('title'));
+        return view('user.create');
     }
 
     /**
@@ -43,34 +44,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $rules = [
-            'name' => 'required|min:3|max:50',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        ];
-        $messages = [
-            'name.required'=>'Vui lòng nhập tên!',
-            'name.min'=>'Vui lòng nhập tên không ít hơn 3 ký tự!',
-            'name.max'=>'Vui lòng nhập tên không quá hơn 50 ký tự!',
-            'password.required'=>'Vui lòng nhập mật khẩu!',
-            'password.confirmed'=>'Mật khẩu không khớp !',
-            'password.min'=>'Vui lòng nhập mật khẩu ít hơn 6 ký tự!',
-            'email.unique'=>'Email đã tồn tại!',
-            'email.required'=>'Vui lòng nhập email',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()):
-            return redirect()->route('user.create')->withErrors($validator)->withInput();
-        else:
-            $atribute = new User;
-            $atribute['name'] = $request->name;
-            $atribute['email'] = $request->email;
-            $atribute['password'] = Hash::make($request->password);
-            $atribute->save();
-            return redirect()->route('user.create')->with('success','#');
-        endif;
+        $attributes = new User;
+        $attributes['name'] = $request->name;
+        $attributes['email'] = $request->email;
+        $attributes['password'] = Hash::make($request->password);
+        $attributes->save();
+        return redirect()->route('users.create')->with('success','#');
     }
 
     /**
@@ -92,9 +73,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $title = "Cập nhật người dùng";
         $users = User::findOrFail($id);
-        return view('user.edit',compact('users','title'));
+        return view('user.edit', compact('users'));
     }
 
     /**
@@ -104,44 +84,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $atribute = User::findOrFail($id);
-        $rules = [
-            'name' => 'required|min:3|max:50',
-            'email'=>['required','string','email','max:255',Rule::unique('users')->ignore($atribute->id)],
-        ];
-        $messages = [
-            'name.required'=>'Vui lòng nhập tên!',
-            'name.min'=>'Vui lòng nhập tên không ít hơn 3 ký tự!',
-            'name.max'=>'Vui lòng nhập tên không quá hơn 50 ký tự!',
-            'email.unique'=>'Email đã tồn tại!',
-            'email.required'=>'Vui lòng nhập email',
-        ];
-        if($request->password != ''){
-            $rules = [
-                'password' => 'required|string|confirmed|min:6',
-            ];
-            $messages = [
-                'password.required'=>'Vui lòng nhập mật khẩu!',
-                'password.confirmed'=>'Mật khẩu không khớp !',
-                'password.min'=>'Vui lòng nhập mật khẩu ít hơn 6 ký tự!',
-            ];
+        $attributes = User::findOrFail($id);
+        $attributes['name'] = $request->name;
+        $attributes['email'] = $request->email;
+        if($request->password != '') $attributes['password'] = Hash::make($request->password);
+        $attributes->save();
+        if($attributes->wasChanged()){
+            return redirect()->back()->with('success','#');
+        }else{
+            return redirect()->back();
         }
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()):
-            return redirect()->back()->withErrors($validator)->withInput();
-        else:
-            $atribute['name'] = $request->name;
-            $atribute['email'] = $request->email;
-            if($request->password != '') $atribute['password'] = Hash::make($request->password);
-            $atribute->save();
-            if($atribute->wasChanged()){ 
-                return redirect()->back()->with('success','#');
-            }else{
-                return redirect()->back();
-            }
-        endif;
+
     }
 
     /**
@@ -154,6 +109,6 @@ class UserController extends Controller
     {
         $users = User::findOrFail($id);
         $users->delete();
-        return redirect()->route('user.index');
+        return redirect()->route('users.index');
     }
 }

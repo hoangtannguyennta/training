@@ -16,7 +16,7 @@
                             @csrf
                             @method('POST')
                             <button class="button" type="submit">{{ __('Đăng xuất') }}</button>
-                            <a class="button" href="{{ route('user.edit',Auth::user()->id) }}">{{ __('Đổi mật khẩu') }}</a>
+                            <a class="button" href="{{ route('users.edit',Auth::user()->id) }}">{{ __('Đổi mật khẩu') }}</a>
                         </form>
                     </div>
                 @else
