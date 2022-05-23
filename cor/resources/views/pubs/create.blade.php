@@ -39,12 +39,14 @@
                             @endforeach
                         </select>
                     </div>
-                    <label for="lname">{{ __('Thành viên sử dụng :') }}</label>
-                    <select name="pubs_users[]" multiple>
-                        @foreach ($users as $user)
-                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                        @endforeach
-                    </select>
+                    <div class="select-multil">
+                        <label for="lname">{{ __('Thành viên sử dụng :') }}</label>
+                        <select name="pubs_users[]" multiple>
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <p>* Nhấn và giữ nút Ctrl (windows) hoặc Command (Mac) để chọn nhiều tùy chọn.</p>
                     <label for="lname">{{ __('Hình ảnh') }}</label>
                     <div class="input-group hdtuto control-group lst increment" >
