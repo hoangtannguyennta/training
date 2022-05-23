@@ -5,6 +5,7 @@
     <div class="container">
         <h1>{{ __('Danh sách hàng hoá') }}</h1>
         <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i></a>
+        <a class="button excel" href="{{ route('pubs.export') }}">{{ __('Export Excel') }}</a>
         <table>
             <tr>
                 <th>{{ __('#') }}</th>

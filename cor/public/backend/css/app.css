@@ -288,6 +288,10 @@ a {
     padding-top: 15px;
 }
 
+.excel {
+    background-color: #45a049;
+}
+
 @media screen and (max-width: 375px) {
     header div {
         display: grid;
