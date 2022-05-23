@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PubController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,13 @@ Route::group(['prefix' => 'users' , 'as' => 'users.'],function(){
 	Route::post('/edit/{id}',[UserController::class, 'update'])->name('update');
 	Route::post('/delete/{id}',[UserController::class, 'destroy'])->name('delete');
 });
+
+Route::group(['prefix' => 'pubs' , 'as' => 'pubs.'],function(){
+	Route::get('/',[PubController::class, 'index'])->name('index');
+	Route::get('/create',[PubController::class, 'create'])->name('create');
+	Route::post('/create',[PubController::class, 'store'])->name('store');
+	Route::get('/edit/{id}',[PubController::class, 'edit'])->name('edit');
+	Route::post('/edit/{id}',[PubController::class, 'update'])->name('update');
+	Route::post('/delete/{id}',[PubController::class, 'destroy'])->name('delete');
+});
+
