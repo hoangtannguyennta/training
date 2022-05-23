@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $users = User::whereNotIn('id', [$user->id])->get();
-        return view('user.list', compact('users'));
+        return view('users.list', compact('users'));
     }
 
     /**
@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('users.create');
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $users = User::findOrFail($id);
-        return view('user.edit', compact('users'));
+        return view('users.edit', compact('users'));
     }
 
     /**

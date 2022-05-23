@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PubRequest;
 use Illuminate\Http\Request;
 use App\Repositories\Pub\PubRepositoryInterface;
 use App\Models\User;
@@ -24,16 +25,16 @@ class PubController extends Controller
     {
         $pubs = $this->pubRepo->getProduct();
 
-        return view('pub.list', compact('pubs'));
+        return view('pubs.list', compact('pubs'));
     }
 
     public function create()
     {
         $users = User::select('id','name')->get();
-        return view('pub.create', compact('users'));
+        return view('pubs.create', compact('users'));
     }
 
-    public function store(Request $request)
+    public function store(PubRequest $request)
     {
         $data = $request->all();
 
@@ -61,10 +62,10 @@ class PubController extends Controller
         $pubs = $this->pubRepo->find($id);
         $users = User::select('id','name')->get();
         $array_pubs_users = $pubs->pubs_users->pluck('id')->toArray();
-        return view('pub.edit', compact('pubs', 'users', 'array_pubs_users'));
+        return view('pubs.edit', compact('pubs', 'users', 'array_pubs_users'));
     }
 
-    public function update(Request $request, $id)
+    public function update(PubRequest $request, $id)
     {
         $data = $request->all();
 

@@ -32,11 +32,11 @@ class UserRequest extends FormRequest
         }else {
             return [
                 'name' => 'required|min:3|max:50',
-                'email' => 'required|string|email|max:255|unique:users,email,'.$this->id, 'id',
             ];
         }
 
     }
+
     public function messages()
     {
         return [
