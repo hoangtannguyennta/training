@@ -6,7 +6,10 @@ use App\Http\Requests\PubRequest;
 use Illuminate\Http\Request;
 use App\Repositories\Pub\PubRepositoryInterface;
 use App\Models\User;
+use App\Exports\PubsExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File as File2;
+use Carbon\Carbon;
 
 class PubController extends Controller
 {
@@ -106,5 +109,10 @@ class PubController extends Controller
         $this->pubRepo->delete($id);
 
         return redirect()->route('pubs.index')->with('success','#');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PubsExport, 'Danh sách hàng hoá ' . Carbon::now()->format('d-m-Y') . '.xlsx');
     }
 }

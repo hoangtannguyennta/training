@@ -27,7 +27,6 @@ class PubRequest extends FormRequest
             'product_name' => 'required|min:2|max:50',
             'amount' => 'required|numeric',
             'price' => 'required|numeric',
-            'images' => 'required',
         ];
     }
 
@@ -41,7 +40,6 @@ class PubRequest extends FormRequest
             'amount.required' => 'Vui lòng nhập chữ số!',
             'price.required' => 'Vui lòng nhập giá!',
             'price.required' => 'Vui lòng nhập chữ số!',
-            'images.required' => 'Vui lòng chọn hình ảnh!',
         ];
     }
 }
