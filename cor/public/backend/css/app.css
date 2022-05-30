@@ -73,7 +73,7 @@ a {
     margin: 28px 0;
 }
 
-.input, select {
+.input, .select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -262,15 +262,9 @@ a {
     margin-top: 10px;
 }
 
-.pubs-list-img {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 5px;
-}
-
 .pubs-list-img img {
-    width: 100px;
     height: 100px;
+    width: 100px;
 }
 
 .pubs-image {
@@ -305,8 +299,13 @@ a {
     background-color: #45a049;
 }
 
-footer {
-    background-color: #9698a6;
+.csv {
+    background-color: #7b7e7b;
+}
+
+.banner-table-top {
+    display: flex;
+    justify-content: space-between;
 }
 
 @media screen and (min-width: 360px) {
