@@ -13,6 +13,6 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
 
     public function getProduct()
     {
-        return $this->model->take(5)->get();
+        return $this->model->query();
     }
 }

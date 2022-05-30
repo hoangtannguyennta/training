@@ -24,16 +24,34 @@ class PubController extends Controller
         $this->pubRepo = $pubRepo;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $users_value = User::get(['id','name']);
+
+        $keyword = isset($request->keyword) ? $request->keyword : '';
+        $users = isset($request->users) ? $request->users : '';
+        $users_many = isset($request->users_many) ? $request->users_many : '';
+
         $pubs = $this->pubRepo->getProduct();
 
-        return view('pubs.list', compact('pubs'));
+        if ($keyword) {
+            $pubs = $pubs->where(function ($query) use ($keyword) {
+                $query->where('product_name','like','%'.$keyword.'%')
+                    ->orWhere('amount','like','%'.$keyword.'%')
+                    ->orWhere('price','like','%'.$keyword.'%');
+                });
+        };
+
+        if ($users) {
+            $pubs = $pubs->where('user_id',$users);
+        }
+        $pubs =  $pubs->paginate(10);
+        return view('pubs.list', compact('pubs', 'keyword', 'users_value', 'users', 'users_many'));
     }
 
     public function create()
     {
-        $users = User::select('id','name')->get();
+        $users = User::get(['id','name']);
         return view('pubs.create', compact('users'));
     }
 
@@ -63,7 +81,7 @@ class PubController extends Controller
     public function edit($id)
     {
         $pubs = $this->pubRepo->find($id);
-        $users = User::select('id','name')->get();
+        $users = User::get(['id','name']);
         $array_pubs_users = $pubs->pubs_users->pluck('id')->toArray();
         return view('pubs.edit', compact('pubs', 'users', 'array_pubs_users'));
     }
@@ -111,8 +129,13 @@ class PubController extends Controller
         return redirect()->route('pubs.index')->with('success','#');
     }
 
-    public function export()
+    public function exportEx()
     {
         return Excel::download(new PubsExport, 'Danh sách hàng hoá ' . Carbon::now()->format('d-m-Y') . '.xlsx');
+    }
+
+    public function exportCsv()
+    {
+        return Excel::download(new PubsExport, 'Danh sách hàng hoá ' . Carbon::now()->format('d-m-Y') . '.csv');
     }
 }

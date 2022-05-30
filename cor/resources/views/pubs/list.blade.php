@@ -4,8 +4,25 @@
 <section class="banner banner-table">
     <div class="container">
         <h1>{{ __('Danh sách hàng hoá') }}</h1>
-        <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i></a>
-        <a class="button excel" href="{{ route('pubs.export') }}">{{ __('Export Excel') }}</a>
+        <div class="banner-table-top">
+            <div class="banner-table-top-left">
+                <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i></a>
+                <a class="button excel" href="{{ route('pubs.exportEx') }}">{{ __('Export Excel') }}</a>
+                <a class="button csv" href="{{ route('pubs.exportCsv') }}">{{ __('Export Csv') }}</a>
+            </div>
+            <div class="banner-table-top-right">
+                <form action="{{ route('pubs.index') }}">
+                    <input type="text" name="keyword" value="{{ $keyword }}">
+                    <select name="users" id="">
+                        <option value="">Chọn người dùng</option>
+                        @foreach ($users_value as $user)
+                            <option {{ $user->id == $users ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
+                    </select>
+                    <button class="button" type="submit">{{ __('Tìm kiếm') }}</button>
+                </form>
+            </div>
+        </div>
         <table>
             <tr>
                 <th>{{ __('#') }}</th>
@@ -14,7 +31,6 @@
                 <th>{{ __('Số lượng') }}</th>
                 <th>{{ __('Giá cả') }}</th>
                 <th>{{ __('T.Tiền') }}</th>
-                <th>{{ __('Ngày tạo') }}</th>
                 <th>{{ __('Chức năng') }}</th>
             </tr>
             @if(count($pubs) === 0)
@@ -34,7 +50,6 @@
                     <td>{{ $pub->amount }}</td>
                     <td>{{ number_format( $pub->price )}}</td>
                     <td>{{ number_format( $pub->price * $pub->amount )}}</td>
-                    <td>{{ $pub->created_at }}</td>
                     <td>
                         <div class="action">
                             <a class="button" href="{{ route('pubs.edit',$pub->id) }}"><i class="fa fa-edit"></i></a>

@@ -18,8 +18,8 @@ class CreateTablePubsTable extends Migration
             $table->string('product_name');
             $table->double('amount');
             $table->double('price');
-            $table->string('images');
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('images')->nullable();
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -32,7 +32,7 @@
                         <label for="lname">{{ __('Giá :') }}</label>
                         <input class="input" type="number" id="lname" name="price" value="{{ $pubs->price }}" placeholder="Nhập giá" required>
                         <label for="lname">{{ __('Thành viên :') }}</label>
-                        <select name="user_id" disabled>
+                        <select class="select" name="user_id" disabled>
                             <option value="">Chọn thành viên nhập</option>
                             @foreach ($users as $user)
                                 <option {{ $user->id == $pubs->user_id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
@@ -41,13 +41,12 @@
                     </div>
                     <div class="select-multil">
                         <label for="lname">{{ __('Thành viên sử dụng :') }}</label>
-                        <select name="pubs_users[]" multiple>
+                        <select class="select" name="pubs_users[]" multiple>
                             @foreach ($users as $user)
                                 <option {{ in_array($user->id,$array_pubs_users) ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
                     </div>
-                    <p>* Nhấn và giữ nút Ctrl (windows) hoặc Command (Mac) để chọn nhiều tùy chọn.</p>
                     <label for="lname">{{ __('Hình ảnh') }}</label>
                     <div class="input-group hdtuto control-group lst increment" >
                         <div class="list-input-hidden-upload">

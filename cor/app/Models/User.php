@@ -47,7 +47,7 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Pub', 'user_id', 'id');
     }
 
-    public function pubs_users()
+    public function users_pubs()
     {
         return $this->belongsToMany('App\Models\Pub', 'pubs_users', 'users_id', 'pubs_id');
     }
