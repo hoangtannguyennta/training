@@ -26,11 +26,15 @@ class PubController extends Controller
 
     public function index(Request $request)
     {
-        $users_value = User::get(['id','name']);
+        $users_value = User::get(['id', 'name']);
+        $start_date_value = Carbon::now()->subDay(30)->format('Y-m-d');
 
         $keyword = isset($request->keyword) ? $request->keyword : '';
         $users = isset($request->users) ? $request->users : '';
         $users_many = isset($request->users_many) ? $request->users_many : '';
+        $start_date = isset($request->start_date) ? $request->start_date : '';
+        $end_date = isset($request->end_date) ? $request->end_date : '';
+
 
         $pubs = $this->pubRepo->getProduct();
 
@@ -45,13 +49,18 @@ class PubController extends Controller
         if ($users) {
             $pubs = $pubs->where('user_id',$users);
         }
+
+        if ($end_date) {
+            $pubs = $pubs->whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date);
+        }
+
         $pubs =  $pubs->paginate(10);
-        return view('pubs.list', compact('pubs', 'keyword', 'users_value', 'users', 'users_many'));
+        return view('pubs.list', compact('pubs', 'keyword', 'users_value', 'users', 'users_many','start_date', 'start_date_value', 'end_date'));
     }
 
     public function create()
     {
-        $users = User::get(['id','name']);
+        $users = User::get(['id', 'name']);
         return view('pubs.create', compact('users'));
     }
 
@@ -60,9 +69,9 @@ class PubController extends Controller
         $data = $request->all();
 
         $files = [];
-        if($request->hasfile('images'))
+        if ($request->hasfile('images'))
 		{
-			foreach($request->file('images') as $file)
+			foreach ($request->file('images') as $file)
 			{
 			    $name = time().rand(1,100).'.'.$file->extension();
 			    $file->move(public_path('files_pubs'), $name);
@@ -81,7 +90,7 @@ class PubController extends Controller
     public function edit($id)
     {
         $pubs = $this->pubRepo->find($id);
-        $users = User::get(['id','name']);
+        $users = User::get(['id', 'name']);
         $array_pubs_users = $pubs->pubs_users->pluck('id')->toArray();
         return view('pubs.edit', compact('pubs', 'users', 'array_pubs_users'));
     }
