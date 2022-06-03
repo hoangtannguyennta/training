@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function pubs()
+    {
+        return $this->hasMany('App\Models\Pub', 'user_id', 'id');
+    }
+
+    public function users_pubs()
+    {
+        return $this->belongsToMany('App\Models\Pub', 'pubs_users', 'users_id', 'pubs_id');
+    }
 }
