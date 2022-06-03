@@ -77,7 +77,7 @@
     </div>
 </section>
 
-@include('modal.modal_delete');
+@include('modal.modal_delete')
 
 <div class="modal">
     <div class="modal-content">
