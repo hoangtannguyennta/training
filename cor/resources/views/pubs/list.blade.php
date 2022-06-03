@@ -7,7 +7,7 @@
         <div class="banner-table-top">
             <div class="banner-table-top-left">
                 <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i></a>
-                <a class="button excel" href="{{ route('pubs.trash') }}"><i class="fa fa-trash-o"></i> {{ __('Thùng rác') }}</a>
+                <a class="button" href="{{ route('pubs.trash') }}"><i class="fa fa-trash-o"></i> {{ __('Thùng rác') }}</a>
                 <a class="button excel" href="{{ route('pubs.exportEx') }}">{{ __('Export Excel') }}</a>
                 <a class="button excel" href="{{ route('pubs.exportCsv') }}">{{ __('Export Csv') }}</a>
             </div>

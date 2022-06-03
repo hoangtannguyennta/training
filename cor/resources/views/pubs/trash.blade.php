@@ -3,11 +3,10 @@
 
 <section class="banner banner-table">
     <div class="container">
-        <h1>{{ __('Danh sách hàng hoá') }}</h1>
+        <h1>{{ __('Danh sách hàng hoá đã xóa') }}</h1>
         <div class="banner-table-top">
             <div class="banner-table-top-left">
                 <a class="button" href="{{ route('pubs.index') }}">{{ __('Trở về') }}</a>
-                <a class="button excel" href="{{ route('pubs.trash') }}"><i class="fa fa-trash-o"></i> {{ __('Thùng rác') }}</a>
             </div>
             <div class="banner-table-top-right">
                 <form action="{{ route('pubs.trash') }}">
