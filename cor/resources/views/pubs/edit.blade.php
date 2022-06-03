@@ -76,17 +76,7 @@
     </div>
 </section>
 
-@if(session()->has('success'))
-    <script >
-    $.toast({
-        heading: 'Success',
-        text:  'Chúc mừng bạn đã cập nhật thành công',
-        bgColor: '#FF1356',
-        position: 'mid-center',
-        stack: false
-    })
-    </script>
-@endif
+@include('modal.success')
 
 @endsection
 
