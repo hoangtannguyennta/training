@@ -30,11 +30,7 @@
                         <div class="action">
                             <a class="button" href="{{ route('users.edit',$item->id) }}"><i class="fa fa-edit"></i></a>
                             <a class="button modal-success" data-email="{{ $item->email }}" data-created_at="{{ $item->created_at }}" data-name="{{ $item->name }}"><i class="fa fa-eye"></i></a>
-                            <form action="{{ route('users.delete',$item->id) }}" enctype="multipart/form-data" method="POST">
-                                @csrf
-                                @method('POST')
-                                <button class="button" onclick="return confirm('Xoá vĩnh viễn {{ $item->email }} ?')" type="submit"><i class="fa fa-trash-o"></i></button>
-                            </form>
+                            <a class="button modal-pubs-delete" data-href="{{ route('users.delete',$item->id) }}"><i class="fa fa-trash-o"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -43,6 +39,8 @@
         </table>
     </div>
 </section>
+
+@include('modal.modal_delete');
 
 <div class="modal">
     <div class="modal-content">

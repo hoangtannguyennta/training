@@ -8,7 +8,6 @@ use App\Repositories\Pub\PubRepositoryInterface;
 use App\Models\User;
 use App\Exports\PubsExport;
 use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\File as File2;
 use Carbon\Carbon;
 
 class PubController extends Controller
@@ -29,33 +28,19 @@ class PubController extends Controller
         $users_value = User::get(['id', 'name']);
         $start_date_value = Carbon::now()->subDay(30)->format('Y-m-d');
 
-        $keyword = isset($request->keyword) ? $request->keyword : '';
-        $users = isset($request->users) ? $request->users : '';
-        $users_many = isset($request->users_many) ? $request->users_many : '';
-        $start_date = isset($request->start_date) ? $request->start_date : '';
-        $end_date = isset($request->end_date) ? $request->end_date : '';
+        $pubs = $this->pubRepo->getProduct($request);
 
+        $data = [
+            'pubs' => $pubs,
+            'start_date_value' => $start_date_value,
+            'keyword' => $request->keyword,
+            'users_value' => $users_value,
+            'users' => $request->users,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ];
+        return view('pubs.list' ,$data);
 
-        $pubs = $this->pubRepo->getProduct();
-
-        if ($keyword) {
-            $pubs = $pubs->where(function ($query) use ($keyword) {
-                $query->where('product_name','like','%'.$keyword.'%')
-                    ->orWhere('amount','like','%'.$keyword.'%')
-                    ->orWhere('price','like','%'.$keyword.'%');
-                });
-        };
-
-        if ($users) {
-            $pubs = $pubs->where('user_id',$users);
-        }
-
-        if ($end_date) {
-            $pubs = $pubs->whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date);
-        }
-
-        $pubs =  $pubs->paginate(10);
-        return view('pubs.list', compact('pubs', 'keyword', 'users_value', 'users', 'users_many','start_date', 'start_date_value', 'end_date'));
     }
 
     public function create()
@@ -66,23 +51,7 @@ class PubController extends Controller
 
     public function store(PubRequest $request)
     {
-        $data = $request->all();
-
-        $files = [];
-        if ($request->hasfile('images'))
-		{
-			foreach ($request->file('images') as $file)
-			{
-			    $name = time().rand(1,100).'.'.$file->extension();
-			    $file->move(public_path('files_pubs'), $name);
-			    $files[] = $name;
-			}
-		}
-
-        $pub = $this->pubRepo->create($data);
-        $pub->images = $files;
-        $pub->pubs_users()->attach($request->pubs_users);
-		$pub->save();
+        $this->pubRepo->postCreate($request);
 
         return redirect()->route('pubs.create')->with('success','#');
     }
@@ -97,36 +66,7 @@ class PubController extends Controller
 
     public function update(PubRequest $request, $id)
     {
-        $data = $request->all();
-
-        $pub = $this->pubRepo->update($id, $data);
-
-        $files = [];
-        $files_remove = [];
-        if($request->hasfile('images'))
-		{
-			foreach($request->file('images') as $file)
-			{
-			    $name = time().rand(1,100).'.'.$file->extension();
-			    $file->move(public_path('files_pubs'), $name);
-			    $files[] = $name;
-			}
-		}
-
-		if (isset($data['images_uploaded'])) {
-			$files_remove = array_diff(json_decode($data['images_uploaded_origin']), $data['images_uploaded']);
-			$files = array_merge($data['images_uploaded'], $files);
-		} else {
-			$files_remove = json_decode($data['images_uploaded_origin']);
-		}
-
-		$pub->images = $files;
-        $pub->pubs_users()->sync($request->pubs_users);
-		if($pub->save()) {
-			foreach ($files_remove as $file_name) {
-				File2::delete(public_path("files_pubs/".$file_name));
-			}
-		}
+        $this->pubRepo->postUpdate($request, $id);
 
         return redirect()->back()->with('success','#');
     }

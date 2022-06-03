@@ -67,11 +67,7 @@
                                 data-created_at = "{{ $pub->created_at }}">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <form action="{{ route('pubs.delete',$pub->id) }}" enctype="multipart/form-data" method="POST">
-                                @csrf
-                                @method('POST')
-                                <button class="button" onclick="return confirm('Xoá vĩnh viễn {{ $pub->product_name }} ?')" type="submit"><i class="fa fa-trash-o"></i></button>
-                            </form>
+                            <a class="button modal-pubs-delete" data-href="{{ route('pubs.delete',$pub->id) }}"><i class="fa fa-trash-o"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -81,6 +77,7 @@
     </div>
 </section>
 
+@include('modal.modal_delete');
 
 <div class="modal">
     <div class="modal-content">
@@ -115,11 +112,11 @@
 @if(session()->has('success'))
     <script >
     $.toast({
-    heading: 'Success',
-    text:  'Chúc mừng bạn đã xoá thành công',
-    bgColor: '#FF1356',
-    position: 'mid-center',
-    stack: false
+        heading: 'Success',
+        text:  'Chúc mừng bạn đã xoá thành công',
+        bgColor: '#FF1356',
+        position: 'mid-center',
+        stack: false
     })
     </script>
 @endif

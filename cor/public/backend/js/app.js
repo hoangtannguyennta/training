@@ -27,6 +27,15 @@ $(document).ready(function(){
         });
     });
 
+    $(".modal-pubs-delete").click(function(e){
+        $('.modal-delete').css('display','block');
+        $('.form-modal-delete').attr('action',$(this).attr('data-href'));
+    });
+
+    $(".modal-close").click(function(){
+        $('.modal-delete').css('display','none');
+    });
+
     $(".modal-close").click(function(){
         $('.modal').css('display','none');
     });

@@ -5,6 +5,7 @@ use App\Repositories\RepositoryInterface;
 
 interface PubRepositoryInterface extends RepositoryInterface
 {
-    //ví dụ: lấy 5 sản phầm đầu tiên
-    public function getProduct();
+    public function getProduct($request);
+    public function postCreate($request);
+    public function postUpdate($request,$id);
 }
