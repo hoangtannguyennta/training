@@ -6,13 +6,11 @@
         <h1>{{ __('Danh sách hàng hoá') }}</h1>
         <div class="banner-table-top">
             <div class="banner-table-top-left">
-                <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i></a>
+                <a class="button" href="{{ route('pubs.index') }}">{{ __('Trở về') }}</a>
                 <a class="button excel" href="{{ route('pubs.trash') }}"><i class="fa fa-trash-o"></i> {{ __('Thùng rác') }}</a>
-                <a class="button excel" href="{{ route('pubs.exportEx') }}">{{ __('Export Excel') }}</a>
-                <a class="button excel" href="{{ route('pubs.exportCsv') }}">{{ __('Export Csv') }}</a>
             </div>
             <div class="banner-table-top-right">
-                <form action="{{ route('pubs.index') }}">
+                <form action="{{ route('pubs.trash') }}">
                     <input type="text" name="keyword" value="{{ $keyword }}">
                     <input type="date" name="start_date" value="{{ $start_date_value }}">
                     <input type="date" name="end_date" value="{{ $end_date  }}">
@@ -56,7 +54,6 @@
                     <td>{{ number_format( $pub->price * $pub->amount )}}</td>
                     <td>
                         <div class="action">
-                            <a class="button" href="{{ route('pubs.edit',$pub->id) }}"><i class="fa fa-edit"></i></a>
                             <a class="button modal-pubs-success"
                                 data-product_name = "{{ $pub->product_name }}"
                                 data-amount = "{{ $pub->amount }}"
@@ -68,7 +65,8 @@
                                 data-created_at = "{{ $pub->created_at }}">
                                 <i class="fa fa-eye"></i>
                             </a>
-                            <a class="button modal-pubs-delete" data-href="{{ route('pubs.delete',$pub->id) }}"><i class="fa fa-trash-o"></i></a>
+                            <a class="button" href="{{ route('pubs.record',$pub->id) }}"><i class="fa fa-undo"></i></a>
+                            <a class="button modal-pubs-delete" data-href="{{ route('pubs.forceDelete',$pub->id) }}"><i class="fa fa-trash-o"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -114,7 +112,19 @@
     <script >
     $.toast({
         heading: 'Success',
-        text:  'Chúc mừng bạn đã thực hiện thành công chức năng',
+        text:  'Chúc mừng bạn đã xoá thành công',
+        bgColor: '#FF1356',
+        position: 'mid-center',
+        stack: false
+    })
+    </script>
+@endif
+
+@if(session()->has('undo'))
+    <script >
+    $.toast({
+        heading: 'Success',
+        text:  'Chúc mừng bạn đã hoàn tác',
         bgColor: '#FF1356',
         position: 'mid-center',
         stack: false

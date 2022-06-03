@@ -43,6 +43,34 @@ class PubController extends Controller
 
     }
 
+    public function trash(Request $request)
+    {
+        $users_value = User::get(['id', 'name']);
+        $start_date_value = Carbon::now()->subDay(30)->format('Y-m-d');
+
+        $pubs = $this->pubRepo->getProductTrash($request);
+
+        $data = [
+            'pubs' => $pubs,
+            'start_date_value' => $start_date_value,
+            'keyword' => $request->keyword,
+            'users_value' => $users_value,
+            'users' => $request->users,
+            'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+        ];
+        return view('pubs.trash' ,$data);
+
+    }
+
+    public function record($id)
+    {
+        $this->pubRepo->getRecord($id);
+
+        return redirect()->route('pubs.index')->with('success','#');
+
+    }
+
     public function create()
     {
         $users = User::get(['id', 'name']);
@@ -76,6 +104,13 @@ class PubController extends Controller
         $this->pubRepo->delete($id);
 
         return redirect()->route('pubs.index')->with('success','#');
+    }
+
+    public function forceDelete($id)
+    {
+        $this->pubRepo->getForceDelete($id);
+
+        return redirect()->back()->with('success','#');
     }
 
     public function exportEx()
