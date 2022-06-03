@@ -16,7 +16,6 @@
                     <input type="text" name="keyword" value="{{ $keyword }}">
                     <input type="date" name="start_date" value="{{ $start_date_value }}">
                     <input type="date" name="end_date" value="{{ $end_date  }}">
-
                     <select name="users" id="">
                         <option value="">Chọn người dùng</option>
                         @foreach ($users_value as $user)
