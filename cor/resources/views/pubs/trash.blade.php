@@ -10,11 +10,10 @@
             </div>
             <div class="banner-table-top-right">
                 <form action="{{ route('pubs.trash') }}">
-                    <input type="text" name="keyword" value="{{ $keyword }}">
-                    <input type="date" name="start_date" value="{{ $start_date_value }}">
-                    <input type="date" name="end_date" value="{{ $end_date  }}">
-
-                    <select name="users" id="">
+                    <input class="input-banner" type="text" name="keyword" value="{{ $keyword }}">
+                    <input class="input-banner" type="date" name="start_date" value="{{ $start_date_value }}">
+                    <input class="input-banner" type="date" name="end_date" value="{{ $end_date  }}">
+                    <select class="select-banner"  name="users" id="">
                         <option value="">Chọn người dùng</option>
                         @foreach ($users_value as $user)
                             <option {{ $user->id == $users ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
