@@ -6,17 +6,17 @@
         <h1>{{ __('Danh sách hàng hoá') }}</h1>
         <div class="banner-table-top">
             <div class="banner-table-top-left">
-                <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i></a>
+                <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i> {{ __('Tạo mới') }}</a>
                 <a class="button" href="{{ route('pubs.trash') }}"><i class="fa fa-trash-o"></i> {{ __('Thùng rác') }}</a>
                 <a class="button excel" href="{{ route('pubs.exportEx') }}">{{ __('Export Excel') }}</a>
                 <a class="button excel" href="{{ route('pubs.exportCsv') }}">{{ __('Export Csv') }}</a>
             </div>
             <div class="banner-table-top-right">
                 <form action="{{ route('pubs.index') }}">
-                    <input type="text" name="keyword" value="{{ $keyword }}">
-                    <input type="date" name="start_date" value="{{ $start_date_value }}">
-                    <input type="date" name="end_date" value="{{ $end_date  }}">
-                    <select name="users" id="">
+                    <input class="input-banner" type="text" name="keyword" value="{{ $keyword }}">
+                    <input class="input-banner" type="date" name="start_date" value="{{ $start_date_value }}">
+                    <input class="input-banner" type="date" name="end_date" value="{{ $end_date  }}">
+                    <select class="select-banner"  name="users" id="">
                         <option value="">Chọn người dùng</option>
                         @foreach ($users_value as $user)
                             <option {{ $user->id == $users ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>

@@ -337,6 +337,13 @@ input, select {
 .banner-table-top {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.banner-table-top-right > form > .input-banner , .select-banner , button {
+    height: 25px;
+    border-radius: 10px;
 }
 
 footer {
