@@ -85,6 +85,10 @@ a {
     box-sizing: border-box;
 }
 
+input, select {
+    border: 1px solid #ccc;
+}
+
 .button {
     background-color: #007bff;
     border: none;
@@ -345,6 +349,11 @@ footer {
     width: 100%;
 }
 
+.footer-test {
+    text-align: center;
+    color: #9698a6;
+}
+
 @media screen and (min-width: 360px) {
     .select-multil {
         margin-top: 14px;
@@ -377,6 +386,12 @@ footer {
 
     .modal-content {
         width: 100%;
+    }
+
+    .banner-table-top {
+        display: grid;
+        grid-template-columns: auto;
+        grid-gap: 10px;
     }
 }
 
