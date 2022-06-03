@@ -78,6 +78,7 @@
 </section>
 
 @include('modal.modal_delete')
+@include('modal.success')
 
 <div class="modal">
     <div class="modal-content">
@@ -108,17 +109,5 @@
         </p>
     </div>
 </div>
-
-@if(session()->has('success'))
-    <script >
-    $.toast({
-        heading: 'Success',
-        text:  'Chúc mừng bạn đã thực hiện thành công chức năng',
-        bgColor: '#FF1356',
-        position: 'mid-center',
-        stack: false
-    })
-    </script>
-@endif
 
 @endsection

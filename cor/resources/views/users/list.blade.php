@@ -41,6 +41,7 @@
 </section>
 
 @include('modal.modal_delete');
+@include('modal.success')
 
 <div class="modal">
     <div class="modal-content">
