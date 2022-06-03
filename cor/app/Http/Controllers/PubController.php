@@ -39,7 +39,7 @@ class PubController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ];
-        return view('pubs.list' ,$data);
+        return view('pubs.list', $data);
 
     }
 
@@ -59,7 +59,7 @@ class PubController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ];
-        return view('pubs.trash' ,$data);
+        return view('pubs.trash', $data);
 
     }
 
