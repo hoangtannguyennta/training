@@ -22,7 +22,7 @@ $(document).ready(function(){
         let data_image = JSON.parse($(this).attr('data-images'));
         $('.pubs-image img').remove();
         $(data_image).each(function(index, value) {
-            var images = "files_pubs/"+value;
+            var images = "../files_pubs/"+value;
             $('.pubs-image').append('<img style="width: 100%;height: 150px" src="'+images+'" alt="">');
         });
     });

@@ -39,6 +39,43 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
         return $pubs->get();
     }
 
+    public function getProductTrash($request)
+    {
+        $keyword = isset($request->keyword) ? $request->keyword : '';
+        $users = isset($request->users) ? $request->users : '';
+        $start_date = isset($request->start_date) ? $request->start_date : '';
+        $end_date = isset($request->end_date) ? $request->end_date : '';
+
+        $pubs = $this->model->query();
+
+        if ($keyword) {
+            $pubs = $pubs->where(function ($query) use ($keyword) {
+                $query->where('product_name','like','%'.$keyword.'%')
+                    ->orWhere('amount','like','%'.$keyword.'%')
+                    ->orWhere('price','like','%'.$keyword.'%');
+                });
+        };
+
+        if ($users) {
+            $pubs = $pubs->where('user_id',$users);
+        }
+
+        if ($end_date) {
+            $pubs = $pubs->whereDate('created_at', '>=', $start_date)->whereDate('created_at', '<=', $end_date);
+        }
+
+        return $pubs->onlyTrashed()->get();
+    }
+
+    public function getRecord($id)
+    {
+        return $this->model->withTrashed()->where('id', $id)->restore();
+    }
+
+    public function getForceDelete($id)
+    {
+        return $this->model->withTrashed()->where('id', $id)->forceDelete();
+    }
 
     public function postCreate($request)
     {

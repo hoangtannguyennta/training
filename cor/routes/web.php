@@ -34,6 +34,8 @@ Route::group(['prefix' => 'users' , 'as' => 'users.'],function(){
 
 Route::group(['prefix' => 'pubs' , 'as' => 'pubs.'],function(){
 	Route::get('/',[PubController::class, 'index'])->name('index');
+    Route::get('/trash',[PubController::class, 'trash'])->name('trash');
+    Route::get('/record/{id}',[PubController::class, 'record'])->name('record');
 	Route::get('/create',[PubController::class, 'create'])->name('create');
     Route::get('/exportEx', [PubController::class, 'exportEx'])->name('exportEx');
     Route::get('/exportCsv', [PubController::class, 'exportCsv'])->name('exportCsv');
@@ -41,5 +43,6 @@ Route::group(['prefix' => 'pubs' , 'as' => 'pubs.'],function(){
 	Route::get('/edit/{id}',[PubController::class, 'edit'])->name('edit');
 	Route::post('/edit/{id}',[PubController::class, 'update'])->name('update');
 	Route::post('/delete/{id}',[PubController::class, 'destroy'])->name('delete');
+    Route::post('/forceDelete/{id}',[PubController::class, 'forceDelete'])->name('forceDelete');
 });
 
