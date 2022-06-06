@@ -40,14 +40,12 @@ class PubController extends Controller
             'end_date' => $request->end_date,
         ];
         return view('pubs.list', $data);
-
     }
 
     public function trash(Request $request)
     {
         $users_value = User::get(['id', 'name']);
         $start_date_value = Carbon::now()->subDay(30)->format('Y-m-d');
-
         $pubs = $this->pubRepo->getProductTrash($request);
 
         $data = [
@@ -59,21 +57,21 @@ class PubController extends Controller
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
         ];
-        return view('pubs.trash', $data);
 
+        return view('pubs.trash', $data);
     }
 
     public function record($id)
     {
         $this->pubRepo->getRecord($id);
 
-        return redirect()->route('pubs.index')->with('success','#');
-
+        return redirect()->route('pubs.index')->with('success', '#');
     }
 
     public function create()
     {
         $users = User::get(['id', 'name']);
+
         return view('pubs.create', compact('users'));
     }
 
@@ -81,7 +79,7 @@ class PubController extends Controller
     {
         $this->pubRepo->postCreate($request);
 
-        return redirect()->route('pubs.create')->with('success','#');
+        return redirect()->route('pubs.create')->with('success', '#');
     }
 
     public function edit($id)
@@ -89,6 +87,7 @@ class PubController extends Controller
         $pubs = $this->pubRepo->find($id);
         $users = User::get(['id', 'name']);
         $array_pubs_users = $pubs->pubs_users->pluck('id')->toArray();
+
         return view('pubs.edit', compact('pubs', 'users', 'array_pubs_users'));
     }
 
@@ -96,21 +95,21 @@ class PubController extends Controller
     {
         $this->pubRepo->postUpdate($request, $id);
 
-        return redirect()->back()->with('success','#');
+        return redirect()->back()->with('success', '#');
     }
 
     public function destroy($id)
     {
         $this->pubRepo->delete($id);
 
-        return redirect()->route('pubs.index')->with('success','#');
+        return redirect()->route('pubs.index')->with('success', '#');
     }
 
     public function forceDelete($id)
     {
         $this->pubRepo->getForceDelete($id);
 
-        return redirect()->back()->with('success','#');
+        return redirect()->back()->with('success', '#');
     }
 
     public function exportEx()
