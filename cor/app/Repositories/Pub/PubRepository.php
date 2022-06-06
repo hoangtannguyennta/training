@@ -22,14 +22,14 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
 
         if ($keyword) {
             $pubs = $pubs->where(function ($query) use ($keyword) {
-                $query->where('product_name','like','%'.$keyword.'%')
-                    ->orWhere('amount','like','%'.$keyword.'%')
-                    ->orWhere('price','like','%'.$keyword.'%');
-                });
+                $query->where('product_name', 'like', '%'.$keyword.'%')
+                    ->orWhere('amount', 'like', '%'.$keyword.'%')
+                    ->orWhere('price', 'like', '%'.$keyword.'%');
+            });
         };
 
         if ($users) {
-            $pubs = $pubs->where('user_id',$users);
+            $pubs = $pubs->where('user_id', $users);
         }
 
         if ($end_date) {
@@ -50,14 +50,14 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
 
         if ($keyword) {
             $pubs = $pubs->where(function ($query) use ($keyword) {
-                $query->where('product_name','like','%'.$keyword.'%')
-                    ->orWhere('amount','like','%'.$keyword.'%')
-                    ->orWhere('price','like','%'.$keyword.'%');
-                });
+                $query->where('product_name', 'like', '%'.$keyword.'%')
+                    ->orWhere('amount', 'like', '%'.$keyword.'%')
+                    ->orWhere('price', 'like', '%'.$keyword.'%');
+            });
         };
 
         if ($users) {
-            $pubs = $pubs->where('user_id',$users);
+            $pubs = $pubs->where('user_id', $users);
         }
 
         if ($end_date) {
@@ -82,15 +82,13 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
         $data = $request->all();
 
         $files = [];
-        if ($request->hasfile('images'))
-		{
-			foreach ($request->file('images') as $file)
-			{
-			    $name = time().rand(1,100).'.'.$file->extension();
-			    $file->move(public_path('files_pubs'), $name);
-			    $files[] = $name;
-			}
-		}
+        if ($request->hasfile('images')) {
+            foreach ($request->file('images') as $file) {
+                $name = time().rand(1, 100).'.'.$file->extension();
+                $file->move(public_path('files_pubs'), $name);
+                $files[] = $name;
+            }
+        }
 
         $pubs = $this->model->create($data);
 
@@ -100,7 +98,7 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
         $pubs->save();
     }
 
-    public function postUpdate($request,$id)
+    public function postUpdate($request, $id)
     {
         $data = $request->all();
 
@@ -109,30 +107,28 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
 
         $files = [];
         $files_remove = [];
-        if ($request->hasfile('images'))
-		{
-			foreach ($request->file('images') as $file)
-			{
-			    $name = time().rand(1,100).'.'.$file->extension();
-			    $file->move(public_path('files_pubs'), $name);
-			    $files[] = $name;
-			}
-		}
+        if ($request->hasfile('images')) {
+            foreach ($request->file('images') as $file) {
+                $name = time().rand(1, 100).'.'.$file->extension();
+                $file->move(public_path('files_pubs'), $name);
+                $files[] = $name;
+            }
+        }
 
-		if (isset($data['images_uploaded'])) {
-			$files_remove = array_diff(json_decode($data['images_uploaded_origin']), $data['images_uploaded']);
-			$files = array_merge($data['images_uploaded'], $files);
-		} else {
-			$files_remove = json_decode($data['images_uploaded_origin']);
-		}
+        if (isset($data['images_uploaded'])) {
+            $files_remove = array_diff(json_decode($data['images_uploaded_origin']), $data['images_uploaded']);
+            $files = array_merge($data['images_uploaded'], $files);
+        } else {
+            $files_remove = json_decode($data['images_uploaded_origin']);
+        }
 
-		$atrributes->images = $files;
+        $atrributes->images = $files;
         $atrributes->pubs_users()->sync($request->pubs_users);
 
-		if ($atrributes->save()) {
-			foreach ($files_remove as $file_name) {
-				File2::delete(public_path("files_pubs/".$file_name));
-			}
-		}
+        if ($atrributes->save()) {
+            foreach ($files_remove as $file_name) {
+                File2::delete(public_path("files_pubs/".$file_name));
+            }
+        }
     }
 }

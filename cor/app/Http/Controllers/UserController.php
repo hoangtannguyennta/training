@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class UserController extends Controller
         $attributes['email'] = $request->email;
         $attributes['password'] = Hash::make($request->password);
         $attributes->save();
-        return redirect()->route('users.create')->with('success','#');
+        return redirect()->route('users.create')->with('success', '#');
     }
 
     /**
@@ -89,14 +90,15 @@ class UserController extends Controller
         $attributes = User::findOrFail($id);
         $attributes['name'] = $request->name;
         $attributes['email'] = $request->email;
-        if($request->password != '') $attributes['password'] = Hash::make($request->password);
+        if ($request->password != '') {
+            $attributes['password'] = Hash::make($request->password);
+        }
         $attributes->save();
-        if($attributes->wasChanged()){
-            return redirect()->back()->with('success','#');
-        }else{
+        if ($attributes->wasChanged()) {
+            return redirect()->back()->with('success', '#');
+        } else {
             return redirect()->back();
         }
-
     }
 
     /**
