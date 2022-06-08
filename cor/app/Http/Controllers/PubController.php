@@ -6,6 +6,8 @@ use App\Http\Requests\PubRequest;
 use Illuminate\Http\Request;
 use App\Repositories\Pub\PubRepositoryInterface;
 use App\Models\User;
+use App\Models\Pub;
+use Illuminate\Support\Facades\Auth;
 use App\Exports\PubsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
@@ -86,7 +88,7 @@ class PubController extends Controller
     {
         $pubs = $this->pubRepo->find($id);
         $users = User::get(['id', 'name']);
-        $array_pubs_users = $pubs->pubs_users->pluck('id')->toArray();
+        $array_pubs_users = $pubs->pubsUsers->pluck('id')->toArray();
 
         return view('pubs.edit', compact('pubs', 'users', 'array_pubs_users'));
     }
@@ -100,25 +102,35 @@ class PubController extends Controller
 
     public function destroy($id)
     {
-        $this->pubRepo->delete($id);
+        $user = Auth::user();
+        $pub = $this->pubRepo->find($id);
 
-        return redirect()->route('pubs.index')->with('success', '#');
+        if ($user->can('delete', $pub)) {
+            $pub->delete();
+            return redirect()->route('pubs.index')->with('success', '#');
+        } else {
+            abort(403);
+        }
     }
 
     public function forceDelete($id)
     {
-        $this->pubRepo->getForceDelete($id);
+        $user = Auth::user();
+        $pub = $this->pubRepo->find($id);
 
-        return redirect()->back()->with('success', '#');
+        if ($user->can('forceDelete', $pub)) {
+
+            $this->pubRepo->getForceDelete($id);
+            return redirect()->back()->with('success', '#');
+
+        } else {
+            abort(403);
+        }
+
     }
 
     public function exportEx()
     {
         return Excel::download(new PubsExport, 'Danh sách hàng hoá ' . Carbon::now()->format('d-m-Y') . '.xlsx');
-    }
-
-    public function exportCsv()
-    {
-        return Excel::download(new PubsExport, 'Danh sách hàng hoá ' . Carbon::now()->format('d-m-Y') . '.csv');
     }
 }

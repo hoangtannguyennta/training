@@ -59,7 +59,7 @@
                                 data-total = "{{ $pub->price * $pub->amount }}"
                                 data-images = "{{ $pub->images }}"
                                 data-user = "{{ $pub->users->name }}"
-                                data-users = "{{ $pub->pubs_users->pluck('name') }}"
+                                data-users = "{{ $pub->pubsUsers->pluck('name') }}"
                                 data-created_at = "{{ $pub->created_at }}">
                                 <i class="fa fa-eye"></i>
                             </a>
@@ -75,59 +75,6 @@
 </section>
 
 @include('modal.modal_delete');
-
-<div class="modal">
-    <div class="modal-content">
-        <span class="modal-close button">&times;</span>
-        <h2>{{ __('Danh sách  chi tiết hàng hoá') }}</h2>
-        <div class="modal-content-list">
-            <div>
-                <h3>{{ __('Tên sản phẩm :') }}</h3>
-                <p class="pubs-name"></p>
-                <h3>{{ __('Số lượng :') }}</h3>
-                <p class="pubs-amount"></p>
-                <h3>{{ __('Giá cả :') }}</h3>
-                <p class="pubs-price"></p>
-            </div>
-            <div>
-                <h3>{{ __('Tổng tiền :') }}</h3>
-                <p class="pubs-total"></p>
-                <h3>{{ __('Thành viên nhập :') }}</h3>
-                <p class="pubs-user"></p>
-                <h3>{{ __('Ngày khởi tạo') }}</h3>
-                <p class="pubs-created_at"></p>
-            </div>
-        </div>
-        <h3>{{ __('Thành viên sử dụng :') }}</h3>
-        <p class="pubs-users"></p>
-        <h3>{{ __('Hình ảnh') }}</h3>
-        <p class="pubs-image">
-        </p>
-    </div>
-</div>
-
-@if(session()->has('success'))
-    <script >
-    $.toast({
-        heading: 'Success',
-        text:  'Chúc mừng bạn đã xoá thành công',
-        bgColor: '#FF1356',
-        position: 'mid-center',
-        stack: false
-    })
-    </script>
-@endif
-
-@if(session()->has('undo'))
-    <script >
-    $.toast({
-        heading: 'Success',
-        text:  'Chúc mừng bạn đã hoàn tác',
-        bgColor: '#FF1356',
-        position: 'mid-center',
-        stack: false
-    })
-    </script>
-@endif
+@include('modal.success')
 
 @endsection

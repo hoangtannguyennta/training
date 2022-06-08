@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 
-class PubsExport implements FromCollection, WithHeadings , WithMapping ,ShouldAutoSize ,WithEvents
+class PubsExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize, WithEvents
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -39,7 +39,7 @@ class PubsExport implements FromCollection, WithHeadings , WithMapping ,ShouldAu
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
+            AfterSheet::class => function (AfterSheet $event) {
                 $cellRange = 'A1:AJ1';
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(12);
                 $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setBold(true);
@@ -50,7 +50,8 @@ class PubsExport implements FromCollection, WithHeadings , WithMapping ,ShouldAu
     public function map($pub): array {
 
         $user_manny = '';
-        foreach($pub->pubs_users as $k =>  $users){
+
+        foreach ($pub->pubsUsers as $k => $users) {
             if ($k > 0) {
                 $user_manny .=  ',' . $users->name;
             } else {

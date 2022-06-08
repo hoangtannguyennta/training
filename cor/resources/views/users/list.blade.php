@@ -5,6 +5,9 @@
     <div class="container">
         <h1>{{ __('Danh sách người dùng') }}</h1>
         <a href="{{ route('users.create') }}" class="button"><i class="fa fa-plus"></i></a>
+        <a href="{{ route('users.create') }}" class="button">Chức vụ</a>
+        <a href="{{ route('users.create') }}" class="button">Vai trò</a>
+
         <table>
             <tr>
                 <th>{{ __('#') }}</th>

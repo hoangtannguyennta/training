@@ -38,7 +38,6 @@ Route::group(['prefix' => 'pubs' , 'as' => 'pubs.'], function () {
     Route::get('/record/{id}', [PubController::class, 'record'])->name('record');
     Route::get('/create', [PubController::class, 'create'])->name('create');
     Route::get('/exportEx', [PubController::class, 'exportEx'])->name('exportEx');
-    Route::get('/exportCsv', [PubController::class, 'exportCsv'])->name('exportCsv');
     Route::post('/create', [PubController::class, 'store'])->name('store');
     Route::get('/edit/{id}', [PubController::class, 'edit'])->name('edit');
     Route::post('/edit/{id}', [PubController::class, 'update'])->name('update');
