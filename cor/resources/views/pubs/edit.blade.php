@@ -22,6 +22,7 @@
                 <form action="{{ route('pubs.update',$pubs->id) }}" enctype="multipart/form-data" method="POST">
                     @csrf
                     @method('POST')
+                    <input type="hidden" name="author_id" value="{{ $pubs->author_id  }}">
                     <div class="form-content">
                         <label for="fname">{{ __('Tên hàng :') }}</label>
                         <input class="input" type="text" id="fname" name="product_name" value="{{ $pubs->product_name }}" placeholder="Nhập tên" required>

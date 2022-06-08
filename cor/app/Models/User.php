@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Traits\HasPermissions;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasPermissions;
+
+    protected $table = "users";
 
     /**
      * The attributes that are mass assignable.
@@ -47,8 +50,13 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Pub', 'user_id', 'id');
     }
 
-    public function users_pubs()
+    public function usersPubs()
     {
         return $this->belongsToMany('App\Models\Pub', 'pubs_users', 'users_id', 'pubs_id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role', 'role_user', 'user_id', 'role_id');
     }
 }

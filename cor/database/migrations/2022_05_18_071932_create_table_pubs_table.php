@@ -20,10 +20,12 @@ class CreateTablePubsTable extends Migration
             $table->double('price');
             $table->string('images')->nullable();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('author_id');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

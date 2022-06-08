@@ -6,10 +6,8 @@
         <h1>{{ __('Danh sách hàng hoá') }}</h1>
         <div class="banner-table-top">
             <div class="banner-table-top-left">
-                <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i> {{ __('Tạo mới') }}</a>
                 <a class="button" href="{{ route('pubs.trash') }}"><i class="fa fa-trash-o"></i> {{ __('Thùng rác') }}</a>
                 <a class="button excel" href="{{ route('pubs.exportEx') }}">{{ __('Export Excel') }}</a>
-                <a class="button excel" href="{{ route('pubs.exportCsv') }}">{{ __('Export Csv') }}</a>
             </div>
             <div class="banner-table-top-right">
                 <form action="{{ route('pubs.index') }}">
@@ -26,6 +24,7 @@
                 </form>
             </div>
         </div>
+        <a href="{{ route('pubs.create') }}" class="button"><i class="fa fa-plus"></i> {{ __('Tạo mới') }}</a>
         <table>
             <tr>
                 <th>{{ __('#') }}</th>
@@ -63,7 +62,7 @@
                                 data-total = "{{ $pub->price * $pub->amount }}"
                                 data-images = "{{ $pub->images }}"
                                 data-user = "{{ $pub->users->name }}"
-                                data-users = "{{ $pub->pubs_users->pluck('name') }}"
+                                data-users = "{{ $pub->pubsUsers->pluck('name') }}"
                                 data-created_at = "{{ $pub->created_at }}">
                                 <i class="fa fa-eye"></i>
                             </a>

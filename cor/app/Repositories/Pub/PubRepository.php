@@ -93,7 +93,7 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
         $pubs = $this->model->create($data);
 
         $pubs->images = $files;
-        $pubs->pubs_users()->attach($request->pubs_users);
+        $pubs->pubsUsers()->attach($request->pubs_users);
 
         $pubs->save();
     }
@@ -123,7 +123,7 @@ class PubRepository extends BaseRepository implements PubRepositoryInterface
         }
 
         $atrributes->images = $files;
-        $atrributes->pubs_users()->sync($request->pubs_users);
+        $atrributes->pubsUsers()->sync($request->pubs_users);
 
         if ($atrributes->save()) {
             foreach ($files_remove as $file_name) {
